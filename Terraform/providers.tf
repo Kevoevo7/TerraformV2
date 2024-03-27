@@ -26,7 +26,7 @@ provider "google" {
 }
 
 provider "linode" {
-  token   = "d14f22b50c1cedfd98e9282e8a8ec293674871c329df7d5f07340d7a956b7440"
+  token = var.linode_token
 }
 
 resource "aws_instance" "example" {
