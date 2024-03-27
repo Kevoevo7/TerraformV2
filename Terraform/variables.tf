@@ -37,3 +37,7 @@ variable "authorized_keys" {
   # You can add other optional attributes such as description
   # description = "SSH public keys to be added to the Linode instance"
 }
+
+variable "linode_token" {
+  description = "Linode API token"
+}
