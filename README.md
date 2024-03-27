@@ -1,5 +1,1 @@
-<<<<<<< HEAD
-# Test
-=======
-
->>>>>>> 9abab6f072b56a74bedfe3caf1d0cb0f9fc463d2
+# Welome to my Repository, This is just Practice Material not anything for Production!!!
