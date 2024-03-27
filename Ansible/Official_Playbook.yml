@@ -1,0 +1,26 @@
+---
+- name: Run Terraform and Ansible Playbooks
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  tasks:
+    - name: Run Terraform init
+      ansible.builtin.command:
+        cmd: "terraform init"
+        chdir: /home/administrator/Desktop/TerraformProject
+
+    - name: Run Terraform apply
+      ansible.builtin.command:
+        cmd: "terraform apply -auto-approve"
+        chdir: /home/administrator/Desktop/TerraformProject
+
+    - name: Run generate_inventory.sh script
+      ansible.builtin.command:
+        cmd: "./generate_inventory.sh"
+        chdir: /home/administrator/Desktop/TerraformProject
+
+    - name: Run Ansible playbook
+      ansible.builtin.command:
+        cmd: "ansible-playbook -i inventory.ini Full_install.yml"
+        chdir: /home/administrator/Desktop/TerraformProject
