@@ -1,0 +1,51 @@
+- name: Install required packages
+  hosts: all
+  become: true
+  tasks:
+      - name: Ensure /home/user directory exists
+      ansible.builtin.file:
+        path: /home/user
+        state: directory
+        owner: admin
+        group: admin
+        mode: "0755"
+
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+
+    - name: Install Docker Compose
+      shell: curl -fsSL https://get.docker.com -o get-docker.sh && sh get-docker.sh
+      args:
+        executable: /bin/bash
+
+- name: Deploy Portainer, WordPress, and Ollama
+  hosts: all
+  become: true
+  vars:
+    ansible_ssh_private_key_file: /home/student/ansible/usethis.pem 
+  tasks:
+    - name: Copy Portainer Docker Compose file
+      copy:
+        src: docker-compose-portainer.yml
+        dest: /home/user/docker-compose-portainer.yml
+
+    - name: Copy WordPress Docker Compose file
+      copy:
+        src: docker-compose-wordpress.yml
+        dest: /home/user/docker-compose-wordpress.yml
+
+    - name: Copy Ollama Docker Compose file
+      copy:
+        src: docker-compose-ollama.yml
+        dest: /home/user/docker-compose-ollama.yml
+
+    - name: Start Portainer container
+      command: docker-compose -f /home/user/docker-compose-portainer.yml up -d
+
+    - name: Start WordPress container
+      command: docker-compose -f /home/user/docker-compose-wordpress.yml up -d
+
+    - name: Start Ollama container
+      command: docker-compose -f /home/user/docker-compose-ollama.yml up -d
